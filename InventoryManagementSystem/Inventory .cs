@@ -46,6 +46,10 @@ namespace InventoryManagementSystem
             products.Remove(keyName);
             return $"The {keyName} product has been deleted successfully! \n";
         }
+        public string SearchProduct(string keyName) 
+        {
+            return $"{products[keyName]}";
+        }
 
 
 

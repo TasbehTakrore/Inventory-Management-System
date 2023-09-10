@@ -60,6 +60,9 @@ namespace InventoryManagementSystem
                         case "d":
                             DeleteProductProcess();
                             break;
+                        case "s":
+                            SearchProductProcess();
+                            break;
                         case "x":
                             Environment.Exit(0);
                             break;
@@ -274,6 +277,24 @@ namespace InventoryManagementSystem
             Console.Write(result + "\n\n");
             Console.ForegroundColor = originalColor;
             ShowMainMenu();
+        }
+        static void SearchProductProcess() 
+        {
+            string name;
+            string result;
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\n* Search for a product *");
+            Console.ForegroundColor = originalColor;
+
+            name = ReadProductName(true);
+            result = inventory.SearchProduct(name);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(result + "\n\n");
+            Console.ForegroundColor = originalColor;
+            ShowMainMenu();
+
         }
 
 
