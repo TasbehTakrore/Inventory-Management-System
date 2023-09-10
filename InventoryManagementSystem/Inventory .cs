@@ -41,6 +41,13 @@ namespace InventoryManagementSystem
             products[keyName].Quantity = newQuantity;
             return $"The {keyName} quantity has been modified successfully! \n";
         }
+        public string DeleteProduct(string keyName) 
+        {
+            products.Remove(keyName);
+            return $"The {keyName} product has been deleted successfully! \n";
+        }
+
+
 
         public override string ToString()
         {
