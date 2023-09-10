@@ -17,5 +17,15 @@ namespace InventoryManagementSystem
         {
             return !products.ContainsKey(name);
         }
+
+        public override string ToString()
+        {
+            String allProducts = string.Empty;
+            foreach (var item in products) {
+                allProducts += $"{item.Value}\n";
+                
+            }
+            return allProducts;
+        }
     }
 }

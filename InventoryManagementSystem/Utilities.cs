@@ -49,6 +49,9 @@ namespace InventoryManagementSystem
                         case "a":
                             AddProductProcess();
                             break;
+                        case "v":
+                            ViewallProductsProcess();
+                            break;
                         case "x":
                             Environment.Exit(0);
                             break;
@@ -138,6 +141,16 @@ namespace InventoryManagementSystem
                 userInput = Console.ReadLine();
             }
             return quantity;
+
+        }
+        static void ViewallProductsProcess() 
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\n* Viewing All Products *");
+            Console.ForegroundColor = originalColor;
+            Console.Write(inventory);
+            Console.WriteLine();
+            ShowMainMenu();
 
         }
     }
