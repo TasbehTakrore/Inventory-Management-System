@@ -18,6 +18,30 @@ namespace InventoryManagementSystem
             return !products.ContainsKey(name);
         }
 
+        public string EditProductName(string keyName, string newName) 
+        {
+            products[keyName].Name = newName;
+            Product updatedProduct = products[keyName];
+
+            products.Remove(keyName);
+            products.Add(newName, updatedProduct);
+
+            return $"The product name has been modified successfully! [Previous Name: {keyName}, New Name: {newName}] \n";
+        }        
+        
+        public string EditProductPrice(string keyName, int newPrice) 
+        {
+
+            products[keyName].Price = newPrice;
+            return $"The {keyName} price has been modified successfully! \n";
+        }
+        public string EditProductQuantity(string keyName, int newQuantity) 
+        {
+
+            products[keyName].Quantity = newQuantity;
+            return $"The {keyName} quantity has been modified successfully! \n";
+        }
+
         public override string ToString()
         {
             String allProducts = string.Empty;

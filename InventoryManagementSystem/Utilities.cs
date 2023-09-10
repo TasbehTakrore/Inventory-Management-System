@@ -17,11 +17,13 @@ namespace InventoryManagementSystem
 
         internal static void Initilization()
         {
-
+            inventory.AddProduct("table", 60, 164);
+            inventory.AddProduct("chair", 38, 166);
+            inventory.AddProduct("spoon", 8, 262);
         }
         internal static void ShowMainMenu()
          {
-            Console.WriteLine("-------------------------");
+            Console.WriteLine("\n-------------------------");
             Console.WriteLine("* Select an action *");
             Console.WriteLine("-------------------------");
 
@@ -44,14 +46,16 @@ namespace InventoryManagementSystem
                 userSelection = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(userSelection))
                 {
-                    userSelection = userSelection.ToLower();
-                    switch (userSelection)
+                    switch (userSelection.ToLower())
                     {
                         case "a":
                             AddProductProcess();
                             break;
                         case "v":
                             ViewallProductsProcess();
+                            break;
+                        case "e":
+                            SelectProductProcess();
                             break;
                         case "x":
                             Environment.Exit(0);
@@ -158,6 +162,96 @@ namespace InventoryManagementSystem
             Console.Write(inventory);
             Console.WriteLine();
             ShowMainMenu();
+
+        }
+        static void SelectProductProcess()
+        {
+            string name;
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\n* Edit a Product *");
+            Console.ForegroundColor = originalColor;
+
+            name = ReadProductName(true); // isPreExisting? => true
+            EditProductProcess(name);
+
+        }
+
+        static void EditProductProcess(string name) 
+        {
+            string userInput;
+
+            while (true)
+            {
+                Console.WriteLine($"** {name} product: Enter (N) to update name, (P) to update price, (Q) to update quantity, (#) to back.");
+                userInput = Console.ReadLine();
+                if (!String.IsNullOrWhiteSpace(userInput))
+                {
+                    switch (userInput.ToLower())
+                    {
+                        case "n":
+                            name =  EditName(name);
+                            break;
+                        case "p":
+                            EditPrice(name);
+                            break;
+                        case "q":
+                            EditQuantity(name);
+                            break;
+                        case "#":
+                            ShowMainMenu();
+                            break;
+                        default:
+                            Console.WriteLine("Invalid input! Please try again.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input! Please try again.");
+                }
+            }
+
+        }
+
+        static string EditName(string keyName) 
+        {
+            string newName;
+            string result;
+            Console.Write("(new name) ");
+            newName = ReadProductName(false);
+            result = inventory.EditProductName(keyName , newName);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(result + "\n\n");
+            Console.ForegroundColor = originalColor;
+            return newName;
+
+        }
+
+        static void EditPrice(string keyName) 
+        {
+            int newPrice;
+            string result;
+            Console.Write("(new price) ");
+
+            newPrice = ReadProductPrice();
+            result = inventory.EditProductPrice(keyName, newPrice);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(result + "\n\n");
+            Console.ForegroundColor = originalColor;
+        }
+
+        static void EditQuantity(string keyName)
+        {
+            int newQuantity;
+            string result;
+            Console.Write("(new quantity) ");
+
+            newQuantity = ReadProductPrice();
+            result = inventory.EditProductQuantity(keyName, newQuantity);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(result + "\n\n");
+            Console.ForegroundColor = originalColor;
 
         }
 
