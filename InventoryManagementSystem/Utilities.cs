@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace InventoryManagementSystem
 {
@@ -69,20 +70,21 @@ namespace InventoryManagementSystem
 
         internal static void AddProductProcess()
         {
+            string result;
+            string name;
+            int price;
+            int quantity;
+
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\n* Adding new Product *");
             Console.ForegroundColor = originalColor;
 
-            string name = string.Empty;
-            int price = 0;
-            int quantity = 0;
-            string result = string.Empty;
-
-            ReadProductName(ref name);
-            ReadProductPrice(ref price);
-            ReadProductQuantity(ref quantity);
+            name = ReadProductName(false); // isPreExisting? => false  
+            price = ReadProductPrice(); ;
+            quantity = ReadProductQuantity();
 
             result = inventory.AddProduct(name, price, quantity);
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(result + "\n\n");
             Console.ForegroundColor = originalColor;
@@ -91,10 +93,13 @@ namespace InventoryManagementSystem
 
         }
 
-        static string ReadProductName(ref string name ) {
+        static string ReadProductName(bool isPreExisting) {
+
+            string name = string.Empty;
+
             Console.Write("Enter the product name: ");
             name = Console.ReadLine();
-            while (string.IsNullOrWhiteSpace(name) || !inventory.IsAvailableName(name.ToLower()))
+            while (string.IsNullOrWhiteSpace(name) || !(inventory.IsAvailableName(name.ToLower()) ^ isPreExisting)) // XNOR operation
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("## This name is not available.\n");
@@ -108,8 +113,9 @@ namespace InventoryManagementSystem
         }
 
 
-        static int ReadProductPrice(ref int price)
+        static int ReadProductPrice()
         {
+            int price;
             string userInput;
 
             Console.Write("Enter the product price: ");
@@ -127,8 +133,9 @@ namespace InventoryManagementSystem
 
         }
 
-        static int ReadProductQuantity(ref int quantity)
+        static int ReadProductQuantity()
         {
+            int quantity;
             string userInput;
             Console.Write("Enter the product quantity: ");
             userInput = Console.ReadLine();
@@ -153,5 +160,7 @@ namespace InventoryManagementSystem
             ShowMainMenu();
 
         }
+
+
     }
 }
