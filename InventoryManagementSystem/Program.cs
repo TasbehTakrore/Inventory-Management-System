@@ -1,4 +1,7 @@
 ﻿using InventoryManagementSystem;
 
-Utilities.Initilization();
-Utilities.ShowMainMenu();
+Inventory inventory = new Inventory();
+InventorySeeder inventorySeeder = new InventorySeeder(inventory);
+inventorySeeder.SeedInventory();
+UserConsoleInterface userConsoleInterface = new(inventory);
+userConsoleInterface.Run();

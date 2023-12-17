@@ -1,69 +1,39 @@
-﻿using System;
-
+﻿
 namespace InventoryManagementSystem
 {
-    internal class Inventory
+    internal class Inventory : IInventory
     {
         Dictionary<string, Product> products = new Dictionary<string, Product>();
 
-
-        public string AddProduct(string name, int price, int quantity)
+        public void AddProduct(Product product)
         {
-            products.Add(name.ToLower(),new Product(name, price, quantity));
-            return "Adding the new product succeeded!";
-
+            products.Add(product.Name.ToLower(), product);
         }
-        public bool IsAvailableName(string name)
+        public bool IsProductAvailable(string name)
         {
-            return !products.ContainsKey(name);
+            return products.ContainsKey(name);
         }
-<<<<<<< HEAD
-
-        public string EditProductName(string keyName, string newName) 
+        public void UpdateProduct(string keyName, Product product)
         {
-            products[keyName].Name = newName;
-            Product updatedProduct = products[keyName];
-
-            products.Remove(keyName);
-            products.Add(newName, updatedProduct);
-
-            return $"The product name has been modified successfully! [Previous Name: {keyName}, New Name: {newName}] \n";
-        }        
-        
-        public string EditProductPrice(string keyName, int newPrice) 
-        {
-
-            products[keyName].Price = newPrice;
-            return $"The {keyName} price has been modified successfully! \n";
-        }
-        public string EditProductQuantity(string keyName, int newQuantity) 
-        {
-
-            products[keyName].Quantity = newQuantity;
-            return $"The {keyName} quantity has been modified successfully! \n";
-        }
-        public string DeleteProduct(string keyName) 
-        {
-            products.Remove(keyName);
-            return $"The {keyName} product has been deleted successfully! \n";
-        }
-        public string SearchProduct(string keyName) 
-        {
-            return $"{products[keyName]}";
-        }
-
-
-
-        public override string ToString()
-        {
-            String allProducts = string.Empty;
-            foreach (var item in products) {
-                allProducts += $"{item.Value}\n";
-                
+            products[keyName] = product;
+            if (!keyName.Equals(product.Name))
+            {
+                products.Remove(keyName);
+                products.Add(product.Name, product);
             }
-            return allProducts;
         }
-=======
->>>>>>> 333e038 (Add feature to add a new product to the inventory)
+        public void DeleteProduct(string keyName)
+        {
+            products.Remove(keyName);
+        }
+
+        public Product GetProduct(string keyName)
+        {
+            return products[keyName];
+        }
+        public List<Product> GetAllProducts()
+        {
+            return products.Values.ToList();
+        }
     }
 }
