@@ -1,39 +1,40 @@
 ﻿
+using InventoryManagementSystem.DB;
+
 namespace InventoryManagementSystem
 {
     internal class Inventory : IInventory
     {
         Dictionary<string, Product> products = new Dictionary<string, Product>();
-
+        IDbManager _dbManager;
+        public Inventory(IDbManager dbManager)
+        {
+            _dbManager = dbManager;
+        }
         public void AddProduct(Product product)
         {
-            products.Add(product.Name.ToLower(), product);
+            _dbManager.AddProduct(product);
         }
         public bool IsProductAvailable(string name)
         {
-            return products.ContainsKey(name);
+            return _dbManager.IsProductAvailable(name);
         }
         public void UpdateProduct(string keyName, Product product)
         {
-            products[keyName] = product;
-            if (!keyName.Equals(product.Name))
-            {
-                products.Remove(keyName);
-                products.Add(product.Name, product);
-            }
+            _dbManager.UpdateProduct(keyName, product);
         }
-        public void DeleteProduct(string keyName)
+        public void DeleteProduct(string productName)
         {
-            products.Remove(keyName);
+            _dbManager.DeleteProduct(productName);
         }
 
         public Product GetProduct(string keyName)
         {
-            return products[keyName];
+            return _dbManager.GetProduct(keyName);
         }
-        public List<Product> GetAllProducts()
+        public IEnumerable<Product> GetAllProducts()
         {
-            return products.Values.ToList();
+            return _dbManager.GetAllProducts();
         }
     }
 }

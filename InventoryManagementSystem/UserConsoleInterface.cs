@@ -114,10 +114,8 @@ namespace InventoryManagementSystem
         }
         int ReadValidProductPrice()
         {
-            int price;
-            string userInput;
             Utilities.PrintMessage("Enter the product price: ", MessageType.Request);
-            userInput = Console.ReadLine();
+            string userInput = Console.ReadLine();
             while (!IsValidPriceInput(userInput))
             {
                 Utilities.PrintMessage("## The value must be valid! \n", MessageType.Error);
@@ -128,7 +126,7 @@ namespace InventoryManagementSystem
         }
         bool IsValidPriceInput(string userInput)
         {
-            return !string.IsNullOrWhiteSpace(userInput) && int.TryParse(userInput, out int price);
+            return !string.IsNullOrWhiteSpace(userInput) && int.TryParse(userInput, out int price) && price > 0;
         }
         int ReadValidProductQuantity()
         {
@@ -146,11 +144,11 @@ namespace InventoryManagementSystem
         }
         bool IsValidQuantityInput(string userInput)
         {
-            return !string.IsNullOrWhiteSpace(userInput) && int.TryParse(userInput, out int quantity);
+            return !string.IsNullOrWhiteSpace(userInput) && int.TryParse(userInput, out int quantity) && quantity >= 0;
         }
         void ViewAllProducts()
         {
-            List<Product> products = _inventory.GetAllProducts();
+            IEnumerable<Product> products = _inventory.GetAllProducts();
             foreach (var product in products)
             {
                 Utilities.PrintMessage($"{product}\n", MessageType.Info);

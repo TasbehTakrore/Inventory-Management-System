@@ -1,4 +1,5 @@
 ﻿using InventoryManagementSystem;
+using InventoryManagementSystem.DB;
 using Microsoft.Extensions.Configuration;
 
 IConfiguration configuration = new ConfigurationBuilder()
@@ -8,8 +9,10 @@ IConfiguration configuration = new ConfigurationBuilder()
 
 AppSettingsReader appSettingsReader = new(configuration);
 
-Console.WriteLine(appSettingsReader.GetConnectionString("MSDB"));
-Inventory inventory = new Inventory();
+var connectionString = appSettingsReader.GetConnectionString("MSDB");
+MSDbManager dbManager = new(connectionString);
+
+Inventory inventory = new Inventory(dbManager);
 InventorySeeder inventorySeeder = new InventorySeeder(inventory);
 inventorySeeder.SeedInventory();
 UserConsoleInterface userConsoleInterface = new(inventory);
