@@ -68,7 +68,7 @@ namespace InventoryManagementSystem.DB
                 }
             }
         }
-        public void UpdateProduct(string keyNam, Product product)
+        public void UpdateProduct(string productName, Product product)
         {
             string updateQuery = @"UPDATE Products 
                                    SET Name = @NewName, Price = @NewPrice, Quantity = @NewQuantity 
@@ -82,13 +82,13 @@ namespace InventoryManagementSystem.DB
                     command.Parameters.AddWithValue("@NewName", product.Name);
                     command.Parameters.AddWithValue("@NewPrice", product.Price);
                     command.Parameters.AddWithValue("@NewQuantity", product.Quantity);
-                    command.Parameters.AddWithValue("@OldName", keyNam);
+                    command.Parameters.AddWithValue("@OldName", productName);
 
                     command.ExecuteNonQuery();
                 }
             }
         }
-        public Product? GetProduct(string keyName)
+        public Product? GetProduct(string productName)
         {
             string selectQuery = @"SELECT Name,
                                           Price,
@@ -103,7 +103,7 @@ namespace InventoryManagementSystem.DB
 
                 using (SqlCommand command = new SqlCommand(selectQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@Name", keyName);
+                    command.Parameters.AddWithValue("@Name", productName);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {

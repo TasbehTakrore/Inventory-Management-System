@@ -7,9 +7,8 @@ namespace InventoryManagementSystem.DB
         void AddProduct(Product product);
         void DeleteProduct(string productName);
         IEnumerable<Product> GetAllProducts();
-        SqlConnection GetConnection();
-        Product? GetProduct(string keyName);
+        Product? GetProduct(string productName);
         bool IsProductAvailable(string productName);
-        void UpdateProduct(string keyNam, Product product);
+        void UpdateProduct(string productName, Product product);
     }
 }

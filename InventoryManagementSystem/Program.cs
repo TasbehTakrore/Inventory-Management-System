@@ -9,10 +9,13 @@ IConfiguration configuration = new ConfigurationBuilder()
 
 AppSettingsReader appSettingsReader = new(configuration);
 
-var connectionString = appSettingsReader.GetConnectionString("MSDB");
-MSDbManager dbManager = new(connectionString);
+//var connectionString = appSettingsReader.GetConnectionString("MSDB");
+var connectionString = appSettingsReader.GetConnectionString("MongoDB");
 
-Inventory inventory = new Inventory(dbManager);
+//MSDbManager dbManager = new(connectionString);
+MongoDbManager mongoDbManager = new(connectionString, "SimpleInventory");
+
+Inventory inventory = new Inventory(mongoDbManager);
 InventorySeeder inventorySeeder = new InventorySeeder(inventory);
 inventorySeeder.SeedInventory();
 UserConsoleInterface userConsoleInterface = new(inventory);

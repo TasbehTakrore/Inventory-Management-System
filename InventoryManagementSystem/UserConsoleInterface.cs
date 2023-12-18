@@ -176,15 +176,17 @@ namespace InventoryManagementSystem
                 switch (updateOption)
                 {
                     case UpdateOption.Name:
-                        UpdateProductName(keyName, product);
+                        product.Name = GetNewName();
                         break;
                     case UpdateOption.Price:
-                        UpdateProductPrice(keyName, product);
+                        product.Price = GetNewPrice();
                         break;
                     case UpdateOption.Quantity:
-                        UpdateProductQuantity(keyName, product);
+                        product.Quantity = GetNewQuantity();
                         break;
                     case UpdateOption.Back:
+                        _inventory.UpdateProduct(keyName, product);
+                        Utilities.PrintMessage("The product has been updated successfully!\n", MessageType.Success);
                         return;
                     default:
                         Utilities.PrintMessage("Invalid input! Please try again.\n", MessageType.Error);
@@ -193,33 +195,26 @@ namespace InventoryManagementSystem
             }
         }
 
-        void UpdateProductName(string keyName, Product product)
+        string GetNewName()
         {
             Utilities.PrintMessage("(new name) ", MessageType.Request);
             string newName = ReadValidProductName(false);
-            product.Name = newName;
-            _inventory.UpdateProduct(keyName, product);
-            Utilities.PrintMessage("The product has been updated successfully!\n", MessageType.Success);
+            return newName;
         }
 
-        void UpdateProductPrice(string keyName, Product product)
+        int GetNewPrice()
         {
             Utilities.PrintMessage("(new price) ", MessageType.Request);
-
             int newPrice = ReadValidProductPrice();
-            product.Price = newPrice;
-            _inventory.UpdateProduct(keyName, product);
-            Utilities.PrintMessage("The product has been updated successfully!\n", MessageType.Success);
+            return newPrice;
         }
 
-        void UpdateProductQuantity(string keyName, Product product)
+        int GetNewQuantity()
         {
             Utilities.PrintMessage("(new quantity) ", MessageType.Request);
 
             int newQuantity = ReadValidProductPrice();
-            product.Quantity = newQuantity;
-            _inventory.UpdateProduct(keyName, product);
-            Utilities.PrintMessage("The product has been updated successfully!\n", MessageType.Success);
+            return newQuantity;
         }
 
         void DeleteProduct()
@@ -227,7 +222,6 @@ namespace InventoryManagementSystem
             string name = ReadValidProductName(true);
             _inventory.DeleteProduct(name);
             Utilities.PrintMessage($"The product has been deleted successfully! \n", MessageType.Success);
-
         }
         void SearchProduct()
         {

@@ -19,18 +19,18 @@ namespace InventoryManagementSystem
         {
             return _dbManager.IsProductAvailable(name);
         }
-        public void UpdateProduct(string keyName, Product product)
+        public void UpdateProduct(string productName, Product product)
         {
-            _dbManager.UpdateProduct(keyName, product);
+            _dbManager.UpdateProduct(productName, product);
         }
         public void DeleteProduct(string productName)
         {
             _dbManager.DeleteProduct(productName);
         }
 
-        public Product GetProduct(string keyName)
+        public Product GetProduct(string productName)
         {
-            return _dbManager.GetProduct(keyName);
+            return _dbManager.GetProduct(productName);
         }
         public IEnumerable<Product> GetAllProducts()
         {

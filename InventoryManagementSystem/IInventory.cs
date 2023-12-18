@@ -5,8 +5,8 @@
         void AddProduct(Product product);
         void DeleteProduct(string productName);
         IEnumerable<Product> GetAllProducts();
-        Product GetProduct(string keyName);
+        Product GetProduct(string productName);
         bool IsProductAvailable(string name);
-        void UpdateProduct(string keyName, Product product);
+        void UpdateProduct(string productName, Product product);
     }
 }
