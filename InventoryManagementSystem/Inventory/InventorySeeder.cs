@@ -1,4 +1,6 @@
-﻿namespace InventoryManagementSystem
+﻿using InventoryManagementSystem.Models;
+
+namespace InventoryManagementSystem.Inventory
 {
     internal class InventorySeeder
     {

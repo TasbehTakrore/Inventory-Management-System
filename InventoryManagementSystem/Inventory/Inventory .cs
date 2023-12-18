@@ -1,11 +1,10 @@
-﻿
-using InventoryManagementSystem.DB;
+﻿using InventoryManagementSystem.DB;
+using InventoryManagementSystem.Models;
 
-namespace InventoryManagementSystem
+namespace InventoryManagementSystem.Inventory
 {
     internal class Inventory : IInventory
     {
-        Dictionary<string, Product> products = new Dictionary<string, Product>();
         IDbManager _dbManager;
         public Inventory(IDbManager dbManager)
         {

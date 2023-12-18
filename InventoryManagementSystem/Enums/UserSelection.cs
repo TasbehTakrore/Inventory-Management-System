@@ -4,7 +4,7 @@
     {
         Add,
         View,
-        Edit,
+        Update,
         Delete,
         Search,
         Invalid,

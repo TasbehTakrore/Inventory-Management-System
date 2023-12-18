@@ -1,4 +1,4 @@
-﻿using System.Data.SqlClient;
+﻿using InventoryManagementSystem.Models;
 
 namespace InventoryManagementSystem.DB
 {

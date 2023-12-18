@@ -1,5 +1,6 @@
-﻿
-using InventoryManagementSystem.Enums;
+﻿using InventoryManagementSystem.Enums;
+using InventoryManagementSystem.Models;
+using InventoryManagementSystem.Inventory;
 
 namespace InventoryManagementSystem
 {
@@ -30,7 +31,7 @@ namespace InventoryManagementSystem
 
             Console.WriteLine("Add: To Add a product.");
             Console.WriteLine("View: To View all products.");
-            Console.WriteLine("Edit: To Edit a product");
+            Console.WriteLine("Update: To Update a product");
             Console.WriteLine("Delete: To Delete a product.");
             Console.WriteLine("Search: To Search for a product");
             Console.WriteLine("Exit: To Exit");
@@ -67,7 +68,7 @@ namespace InventoryManagementSystem
                 case UserSelection.View:
                     ViewAllProducts();
                     break;
-                case UserSelection.Edit:
+                case UserSelection.Update:
                     string name = ReadValidProductName(true);
                     UpdateProduct(name);
                     break;
@@ -169,7 +170,7 @@ namespace InventoryManagementSystem
             string userInput;
             while (true)
             {
-                Utilities.PrintMessage($"** {keyName} product: Enter (Name) to update name, (Price) to update price, (Quantity) to update quantity, (Back) to back.\n", MessageType.Info);
+                Utilities.PrintMessage($"** {keyName} product: Enter (Name) to update name, (Price) to update price, (Quantity) to update quantity, (Done) to Update and back.\n >> ", MessageType.Info);
                 userInput = Console.ReadLine();
                 UpdateOption updateOption = ParseUpdateOption(userInput);
 
@@ -184,7 +185,7 @@ namespace InventoryManagementSystem
                     case UpdateOption.Quantity:
                         product.Quantity = GetNewQuantity();
                         break;
-                    case UpdateOption.Back:
+                    case UpdateOption.Done:
                         _inventory.UpdateProduct(keyName, product);
                         Utilities.PrintMessage("The product has been updated successfully!\n", MessageType.Success);
                         return;

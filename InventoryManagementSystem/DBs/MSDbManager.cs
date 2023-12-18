@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using InventoryManagementSystem.Models;
 
 namespace InventoryManagementSystem.DB
 {
@@ -10,10 +11,12 @@ namespace InventoryManagementSystem.DB
         {
             this.connectionString = connectionString;
         }
+
         public SqlConnection GetConnection()
         {
             return new SqlConnection(connectionString);
         }
+
         public void AddProduct(Product product)
         {
             string insertQuery = @"INSERT INTO Products (Name, Price, Quantity) 
@@ -33,6 +36,7 @@ namespace InventoryManagementSystem.DB
                 }
             }
         }
+
         public void DeleteProduct(string productName)
         {
             string deleteQuery = @"DELETE Products 
@@ -49,6 +53,7 @@ namespace InventoryManagementSystem.DB
                 }
             }
         }
+
         public bool IsProductAvailable(string productName)
         {
             string selectQuery = @"IF EXISTS (SELECT 1 FROM Products WHERE Name = @Name) 
@@ -68,6 +73,7 @@ namespace InventoryManagementSystem.DB
                 }
             }
         }
+
         public void UpdateProduct(string productName, Product product)
         {
             string updateQuery = @"UPDATE Products 
@@ -88,6 +94,7 @@ namespace InventoryManagementSystem.DB
                 }
             }
         }
+
         public Product? GetProduct(string productName)
         {
             string selectQuery = @"SELECT Name,
@@ -121,6 +128,7 @@ namespace InventoryManagementSystem.DB
             }
             return product;
         }
+
         public IEnumerable<Product> GetAllProducts()
         {
             string selectQuery = @"SELECT Name,

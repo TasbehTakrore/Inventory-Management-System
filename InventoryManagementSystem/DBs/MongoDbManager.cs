@@ -1,6 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using InventoryManagementSystem.Models;
 using MongoDB.Driver;
-using System.Data.SqlClient;
 
 namespace InventoryManagementSystem.DB
 {
@@ -48,7 +47,7 @@ namespace InventoryManagementSystem.DB
         {
             var collection = _database.GetCollection<Product>("Products");
 
-            return collection.Find(product => product.Name == productName).Any();  
+            return collection.Find(product => product.Name == productName).Any();
         }
 
         public void UpdateProduct(string productName, Product product)

@@ -1,5 +1,4 @@
-﻿
-namespace InventoryManagementSystem
+﻿namespace InventoryManagementSystem.Models
 {
     internal class Product
     {
