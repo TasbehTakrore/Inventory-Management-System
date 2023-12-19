@@ -6,6 +6,6 @@
         Price,
         Quantity,
         Invalid,
-        Back
+        Done
     }
 }
