@@ -3,11 +3,11 @@ using InventoryManagementSystem.Models;
 
 namespace InventoryManagementSystem.DB
 {
-    internal class MSDbManager : IDbManager
+    internal class SqlRepository : IRepository
     {
         private readonly string connectionString;
 
-        public MSDbManager(string connectionString)
+        public SqlRepository(string connectionString)
         {
             this.connectionString = connectionString;
         }
@@ -19,8 +19,17 @@ namespace InventoryManagementSystem.DB
 
         public void AddProduct(Product product)
         {
-            string insertQuery = @"INSERT INTO Products (Name, Price, Quantity) 
-                                   VALUES (@Name, @Price, @Quantity)";
+            string insertQuery = @"INSERT INTO Products 
+                                   (
+                                      Name, 
+                                      Price, 
+                                      Quantity
+                                   ) 
+                                   VALUES (
+                                      @Name, 
+                                      @Price, 
+                                      @Quantity
+                                   )";
 
             using (SqlConnection connection = GetConnection())
             {
@@ -39,8 +48,11 @@ namespace InventoryManagementSystem.DB
 
         public void DeleteProduct(string productName)
         {
-            string deleteQuery = @"DELETE Products 
-                                   WHERE Name = @Name";
+            string deleteQuery = @"DELETE
+                                      Products 
+                                   WHERE
+                                      Name = @Name";
+
             using (SqlConnection connection = GetConnection())
             {
                 connection.Open();
@@ -56,10 +68,18 @@ namespace InventoryManagementSystem.DB
 
         public bool IsProductAvailable(string productName)
         {
-            string selectQuery = @"IF EXISTS (SELECT 1 FROM Products WHERE Name = @Name) 
-                                    SELECT 1 
-                                  ELSE 
-                                    SELECT 0";
+            string selectQuery = @"IF EXISTS 
+                                   (
+                                     SELECT 1 
+                                     FROM 
+                                        Products
+                                     WHERE 
+                                        Name = @Name
+                                   ) 
+                                   SELECT 1 
+                                      ELSE 
+                                   SELECT 0";
+
             using (SqlConnection connection = GetConnection())
             {
                 connection.Open();
@@ -76,9 +96,15 @@ namespace InventoryManagementSystem.DB
 
         public void UpdateProduct(string productName, Product product)
         {
-            string updateQuery = @"UPDATE Products 
-                                   SET Name = @NewName, Price = @NewPrice, Quantity = @NewQuantity 
-                                   WHERE Name = @OldName";
+            string updateQuery = @"UPDATE
+                                      Products 
+                                   SET
+                                      Name = @NewName,
+                                      Price = @NewPrice,
+                                      Quantity = @NewQuantity 
+                                   WHERE
+                                      Name = @OldName";
+
             using (SqlConnection connection = GetConnection())
             {
                 connection.Open();
@@ -97,11 +123,15 @@ namespace InventoryManagementSystem.DB
 
         public Product? GetProduct(string productName)
         {
-            string selectQuery = @"SELECT Name,
-                                          Price,
-                                          Quantity
-                                   FROM Products 
-                                   WHERE Name = @Name";
+            string selectQuery = @"SELECT
+                                      Name,
+                                      Price,
+                                      Quantity
+                                   FROM 
+                                      Products 
+                                   WHERE
+                                      Name = @Name";
+
             Product? product = null;
 
             using (SqlConnection connection = GetConnection())
@@ -131,10 +161,12 @@ namespace InventoryManagementSystem.DB
 
         public IEnumerable<Product> GetAllProducts()
         {
-            string selectQuery = @"SELECT Name,
-                                          Price,
-                                          Quantity
-                                   FROM Products";
+            string selectQuery = @"SELECT
+                                      Name,
+                                      Price,
+                                      Quantity
+                                   FROM 
+                                      Products";
 
             using (SqlConnection connection = GetConnection())
             {
@@ -155,7 +187,7 @@ namespace InventoryManagementSystem.DB
                         }
                     }
                 }
-            }
+            }s
         }
     }
 }

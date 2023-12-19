@@ -3,10 +3,10 @@ using MongoDB.Driver;
 
 namespace InventoryManagementSystem.DB
 {
-    internal class MongoDbManager : IDbManager
+    internal class MongoRepository : IRepository
     {
         private readonly IMongoDatabase _database;
-        public MongoDbManager(string connectionString, string dbName)
+        public MongoRepository(string connectionString, string dbName)
         {
             var client = new MongoClient(connectionString);
             _database = client.GetDatabase(dbName);

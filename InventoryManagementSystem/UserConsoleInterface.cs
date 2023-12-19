@@ -1,16 +1,16 @@
 ﻿using InventoryManagementSystem.Enums;
 using InventoryManagementSystem.Models;
-using InventoryManagementSystem.Inventory;
+using InventoryManagementSystem.DB;
 
 namespace InventoryManagementSystem
 {
     internal class UserConsoleInterface
     {
-        private readonly IInventory _inventory;
+        private readonly IRepository _repository;
         static ConsoleColor originalColor = Console.ForegroundColor;
-        public UserConsoleInterface(IInventory inventory)
+        public UserConsoleInterface(IRepository repository)
         {
-            _inventory = inventory;
+            _repository = repository;
         }
 
         internal void Run()
@@ -62,7 +62,7 @@ namespace InventoryManagementSystem
             {
                 case UserSelection.Add:
                     Product newProduct = ReadNewProduct();
-                    _inventory.AddProduct(newProduct);
+                    _repository.AddProduct(newProduct);
                     Utilities.PrintMessage("The product has been added successfully\n\n", MessageType.Success);
                     break;
                 case UserSelection.View:
@@ -111,7 +111,7 @@ namespace InventoryManagementSystem
         }
         bool IsInvalidProductName(string name, bool isPreExisting)
         {
-            return string.IsNullOrWhiteSpace(name) || (_inventory.IsProductAvailable(name.ToLower()) ^ isPreExisting);
+            return string.IsNullOrWhiteSpace(name) || (_repository.IsProductAvailable(name.ToLower()) ^ isPreExisting);
         }
         int ReadValidProductPrice()
         {
@@ -149,7 +149,7 @@ namespace InventoryManagementSystem
         }
         void ViewAllProducts()
         {
-            IEnumerable<Product> products = _inventory.GetAllProducts();
+            IEnumerable<Product> products = _repository.GetAllProducts();
             foreach (var product in products)
             {
                 Utilities.PrintMessage($"{product}\n", MessageType.Info);
@@ -166,7 +166,7 @@ namespace InventoryManagementSystem
         }
         void UpdateProduct(string keyName)
         {
-            Product product = _inventory.GetProduct(keyName);
+            Product product = _repository.GetProduct(keyName);
             string userInput;
             while (true)
             {
@@ -186,7 +186,7 @@ namespace InventoryManagementSystem
                         product.Quantity = GetNewQuantity();
                         break;
                     case UpdateOption.Done:
-                        _inventory.UpdateProduct(keyName, product);
+                        _repository.UpdateProduct(keyName, product);
                         Utilities.PrintMessage("The product has been updated successfully!\n", MessageType.Success);
                         return;
                     default:
@@ -221,13 +221,13 @@ namespace InventoryManagementSystem
         void DeleteProduct()
         {
             string name = ReadValidProductName(true);
-            _inventory.DeleteProduct(name);
+            _repository.DeleteProduct(name);
             Utilities.PrintMessage($"The product has been deleted successfully! \n", MessageType.Success);
         }
         void SearchProduct()
         {
             string name = ReadValidProductName(true);
-            Product product = _inventory.GetProduct(name);
+            Product product = _repository.GetProduct(name);
             Utilities.PrintMessage($"{product}\n", MessageType.Info);
         }
     }

@@ -1,14 +1,14 @@
 ﻿using InventoryManagementSystem.Models;
 
-namespace InventoryManagementSystem.Inventory
+namespace InventoryManagementSystem.DB
 {
-    internal interface IInventory
+    internal interface IRepository
     {
         void AddProduct(Product product);
         void DeleteProduct(string productName);
         IEnumerable<Product> GetAllProducts();
         Product GetProduct(string productName);
-        bool IsProductAvailable(string name);
+        bool IsProductAvailable(string productName);
         void UpdateProduct(string productName, Product product);
     }
 }
